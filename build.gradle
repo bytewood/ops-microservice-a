@@ -1,0 +1,73 @@
+buildscript {
+
+    repositories {
+        maven {
+            credentials {
+                username "${artifactory_user}"
+                password "${artifactory_password}"
+            }
+            url "${artifactory_contextUrl}/libs-release"
+        }
+    }
+ 
+dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_gradle_plugin_version}"
+        classpath "org.springframework.build.gradle:propdeps-plugin:${gradle_propdeps_plugin_version}"
+        classpath "se.transmode.gradle:gradle-docker:${gradle_docker_plugin_version}"
+    }
+}
+
+plugins {
+    id "idea"
+    id "eclipse"
+}
+
+apply plugin: "propdeps"
+apply plugin: "propdeps-maven"
+apply plugin: "propdeps-idea"
+apply plugin: "propdeps-eclipse"
+
+apply plugin: "spring-boot"
+
+group = "org.bytewood.microservices"
+jar.baseName = "app"
+
+idea {
+    project {
+        jdkName = "1.8"
+        languageLevel = "1.8"
+    }
+}
+
+repositories {
+    maven {
+        credentials {
+            username "${artifactory_user}"
+            password "${artifactory_password}"
+        }
+        url "${artifactory_contextUrl}/libs-release"
+    }
+}
+
+dependencies {
+    compile ("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile "org.springframework.boot:spring-boot-starter-undertow"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+    compile "org.springframework.cloud:spring-cloud-starter-consul-discovery:${spring_cloud_starter_consul_discovery_version}"
+
+    testCompile "junit:junit"
+    testCompile "org.assertj:assertj-core:${assertj_version}"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+
+    provided "org.projectlombok:lombok:${lombok_version}"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
+
