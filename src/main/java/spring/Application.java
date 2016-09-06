@@ -2,7 +2,6 @@ package spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
  * © 2016 org.bytewood
  */
 @SpringBootApplication
-@EnableDiscoveryClient
 @RestController
 public class Application {
 
@@ -20,7 +18,7 @@ public class Application {
 
     @RequestMapping(value="/loop")
     public String loop() {
-        return "found microservice-a " + System.getProperty("hostname");
+        return "{ \"service\" : \"microservice-a\", \"instance\" : \"" + System.getProperty("hostname") + "\" }";
     }
 
 }
