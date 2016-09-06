@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import spring.model.Microservice;
 
 /**
  * © 2016 org.bytewood
@@ -17,8 +18,11 @@ public class Application {
     }
 
     @RequestMapping(value="/loop")
-    public String loop() {
-        return "{ \"service\" : \"microservice-a\", \"instance\" : \"" + System.getProperty("hostname") + "\" }";
+    public Microservice loop() {
+        return Microservice.builder()
+                .name("microservice-a")
+                .instance(System.getProperty("hostname"))
+                .build();
     }
 
 }
