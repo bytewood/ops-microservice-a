@@ -21,7 +21,7 @@ public class Application {
     public Microservice loop() {
         return Microservice.builder()
                 .name("microservice-a")
-                .instance(System.getProperty("hostname"))
+                .instance(System.getProperty("spring.cloud.client.hostname"))
                 .build();
     }
 
