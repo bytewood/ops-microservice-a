@@ -1,5 +1,8 @@
+spring:
+  application:
+    name: microservice-a
 server:
   port: 8882
   contextPath: /api/0.1
 abc:
-    abc: "${ABC:pqr}"
+  abc: "${ABC:pqr}"

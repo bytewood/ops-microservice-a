@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Microservice {
+    private String message;
     private String name;
     private String instance;
 }
