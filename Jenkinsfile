@@ -25,7 +25,7 @@ node {
         sh "./gradlew test"
     }
 
-    //stage ("Integration Test") {
+    stage ("Integration Test") {
     //  sh "./gradlew integration"
     }
 
