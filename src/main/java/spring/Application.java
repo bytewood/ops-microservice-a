@@ -1,5 +1,6 @@
 package spring;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import spring.model.Microservice;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,10 +34,15 @@ public class Application {
     @RequestMapping(value="/echo")
     public Microservice echo(@RequestParam(name = "message", required = false, defaultValue = "___oooOOO") String message) {
         return Microservice.builder()
-                .message(message)
+                .message(urlDecode(message))
                 .name("microservice-a")
                 .instance(hostName)
                 .build();
+    }
+
+    @SneakyThrows
+    private String urlDecode(@RequestParam(name = "message", required = false, defaultValue = "___oooOOO") String message)  {
+        return URLDecoder.decode(message, "UTF-8");
     }
 
     @Bean
